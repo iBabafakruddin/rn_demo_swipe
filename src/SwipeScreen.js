@@ -1,22 +1,44 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { Text, StyleSheet, View } from "react-native";
 import Swipeable from "../components/Swipeable";
 
 const SwipeScreen = () => {
+  const [numRecords, setNumRecords] = useState(10);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const records = [];
+    let startRecord = numRecords - 10;
+    for (let i = startRecord; i < numRecords; i++) {
+      const record = { id: i, text: `Record number ${i}` };
+      records.push(record);
+    }
+    setData(records);
+  }, [numRecords]);
+
+  const loadMoreRecords = item => {
+    const updatedData = data.filter(record => record.id !== item.id);
+    if (updatedData.length === 0) {
+      const nextRecordsCount = numRecords + 10;
+      setNumRecords(nextRecordsCount);
+    } else {
+      setData(updatedData);
+    }
+  };
+
   return (
     <View>
-      <Swipeable item={{ id: 1 }} style={styles.item}>
-        <Text>Item 1</Text>
-      </Swipeable>
-      <Swipeable item={{ id: 2 }} style={styles.item}>
-        <Text>Item 2</Text>
-      </Swipeable>
-      <Swipeable item={{ id: 3 }} style={styles.item}>
-        <Text>Item 3</Text>
-      </Swipeable>
-      <Swipeable item={{ id: 4 }} style={styles.item}>
-        <Text>Item 4</Text>
-      </Swipeable>
+      {data.map(record => {
+        return (
+          <Swipeable
+            onSwipeLeft={loadMoreRecords}
+            onSwipeRight={loadMoreRecords}
+            item={record}
+            style={styles.item}
+          >
+            <Text>{record.text}</Text>
+          </Swipeable>
+        );
+      })}
     </View>
   );
 };
