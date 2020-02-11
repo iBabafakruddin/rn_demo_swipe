@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const HomeScreen = () => {
+const HomeScreen = props => {
   return (
     <View>
-      <Text>HomeScreen Component</Text>
+      <Text>HomeScreen Component, Name is {props.name}</Text>
     </View>
   );
 };

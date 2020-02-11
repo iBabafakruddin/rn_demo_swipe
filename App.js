@@ -7,7 +7,7 @@ class ClassComp extends React.Component {
   render() {
     return (
       <View>
-        <Text>Class Component</Text>
+        <Text>Class Component, Name is {this.props.name}</Text>
       </View>
     );
   }
@@ -16,8 +16,8 @@ class ClassComp extends React.Component {
 const App = () => {
   return (
     <View>
-      <ClassComp />
-      <HomeScreen />
+      <ClassComp name="Admin" />
+      <HomeScreen name="Admin" />
     </View>
   );
 };
