@@ -1,6 +1,7 @@
 import React from "react";
-import { View } from "react-native";
-import { Text } from "react-native";
+import { View, Text } from "react-native";
+
+import HomeScreen from "./src/screens/HomeScreen";
 
 class ClassComp extends React.Component {
   render() {
@@ -12,19 +13,11 @@ class ClassComp extends React.Component {
   }
 }
 
-const FunComp = () => {
-  return (
-    <View>
-      <Text>Funcion Component</Text>
-    </View>
-  );
-};
-
 const App = () => {
   return (
     <View>
       <ClassComp />
-      <FunComp />
+      <HomeScreen />
     </View>
   );
 };
