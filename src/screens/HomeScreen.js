@@ -1,59 +1,69 @@
-import React from "react";
-import {
-  Animated,
-  TouchableWithoutFeedback,
-  Text,
-  View,
-  StyleSheet
-} from "react-native";
+import React, { useContext, useEffect } from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
+import { Context as BooksContext } from "../context/BooksContext";
+import Swipeable from "../components/Swipeable";
 
 const HomeScreen = () => {
-  const moveAnimation = new Animated.ValueXY({ x: 10, y: 400 });
+  const { state, getData, removeFromList, purchaseBook } = useContext(
+    BooksContext
+  );
 
-  const moveBall = () => {
-    Animated.spring(moveAnimation, {
-      toValue: { x: 250, y: 10 }
-    }).start();
+  useEffect(() => {
+    getData();
+  }, []);
 
-    setTimeout(() => {
-      Animated.spring(moveAnimation, {
-        toValue: { x: 10, y: 400 }
-      }).start();
-    }, 2000);
+  const nextItem = currnetItem => {
+    removeFromList(currnetItem);
   };
 
-  return (
-    <View style={styles.container}>
-      <Animated.View style={[styles.tennisBall, moveAnimation.getLayout()]}>
-        <TouchableWithoutFeedback style={styles.button} onPress={moveBall}>
-          <Text style={styles.buttonText}>Press</Text>
-        </TouchableWithoutFeedback>
-      </Animated.View>
-    </View>
-  );
+  const onRightSwipe = currnetItem => {
+    purchaseBook(currnetItem);
+    removeFromList(currnetItem);
+  };
+
+  const showBooks = () => {
+    if (!state || !state.Books)
+      return (
+        <View>
+          <Text>No Books Available</Text>
+        </View>
+      );
+    return (
+      <View>
+        <Text>Home</Text>
+        {state.Books.map(Book => {
+          return (
+            <Swipeable
+              key={Book.id}
+              onSwipeRight={onRightSwipe}
+              onSwipeLeft={nextItem}
+              item={Book}
+              style={styles.book}
+            >
+              <Image
+                source={require(`../../assets/${Book.image}`)}
+                style={{ height: 400, width: 300 }}
+              />
+              <View style={{ marginTop: 0 }}>
+                <Text>{Book.title}</Text>
+                <Text>{Book.author}</Text>
+              </View>
+            </Swipeable>
+          );
+        })}
+      </View>
+    );
+  };
+  return showBooks();
 };
 
 const styles = StyleSheet.create({
-  container: {
+  book: {
     flex: 1,
-    backgroundColor: "#ecf0f1"
-  },
-  tennisBall: {
-    display: "flex",
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "greenyellow",
-    borderRadius: 100,
-    width: 100,
-    height: 100
-  },
-  button: {
-    paddingTop: 24,
-    paddingBottom: 24
-  },
-  buttonText: {
-    fontSize: 24,
-    color: "#333"
+    height: 500,
+    backgroundColor: "grey",
+    marginTop: 4
   }
 });
 

@@ -11,11 +11,11 @@ const ShelfScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getData();
-  }, []);
+    console.log(state);
+  }, [state.purchasedBooks]);
 
   const showBooks = () => {
-    if (!state || !state.Books)
+    if (!state || !state.purchasedBooks)
       return (
         <View>
           <Text>No Books Available</Text>
@@ -23,8 +23,8 @@ const ShelfScreen = ({ navigation }) => {
       );
     return (
       <ScrollView>
-        <Text>ShelfScreen Component</Text>
-        {state.Books.map(Book => {
+        <Text>Book Shelf</Text>
+        {state.purchasedBooks.map(Book => {
           return (
             <TouchableOpacity
               key={Book.id}
