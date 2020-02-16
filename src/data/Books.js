@@ -28,7 +28,12 @@ export default {
       id: 3,
       title: "The Alchemist",
       author: "Paulo Coelho",
-      image: "alchemist.jpg"
+      image: "alchemist.jpg",
+      description:
+        "Paulo Coelho's enchanting novel has inspired a devoted following around the world. \
+      This story, dazzling in its powerful simplicity and inspiring wisdom, \
+      is about an Andalusian shepherd boy named Santiago who travels from his homeland in Spain \
+      to the Egyptian desert in search of a treasure buried in the Pyramids"
     },
     {
       id: 4,
