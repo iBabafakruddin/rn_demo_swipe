@@ -6,11 +6,20 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import HomeScreen from "./src/screens/HomeScreen";
 import ShelfScreen from "./src/screens/ShelfScreen";
 import ReaderScreen from "./src/screens/ReaderScreen";
-
+import { Provider as BooksProvider } from "./src/context/BooksContext";
 const bottomTabBar = createBottomTabNavigator({
   Home: { screen: HomeScreen },
   Shelf: { screen: ShelfScreen },
   Read: { screen: ReaderScreen }
 });
 
-export default createAppContainer(bottomTabBar);
+const App = () => {
+  const Root = createAppContainer(bottomTabBar);
+  return (
+    <BooksProvider>
+      <Root />
+    </BooksProvider>
+  );
+};
+
+export default App;
